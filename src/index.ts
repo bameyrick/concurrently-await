@@ -47,7 +47,7 @@ if (!(args instanceof Promise)) {
 
     const condition = conditionMatches ? (conditionMatches[0].replace('--', '').trim() as WaitCondition) : undefined;
 
-    const value = condition ? argParts[1].split(`--${condition}`)[1].trim().toLowerCase() : undefined;
+    const value = condition ? argParts[1].split(`--${condition}`)[1].trim() : undefined;
 
     return {
       command: argParts[0].trim(),

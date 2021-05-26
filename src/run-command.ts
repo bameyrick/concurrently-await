@@ -9,6 +9,8 @@ export function runCommand(command: string, index: number, name: string, callbac
   console.log(chalk.green(`Running ${name}: "${command}"`));
 
   exec(command).stdout?.on('data', data => {
+    data = data.trim();
+
     if (data) {
       logger(index, data, name);
     }
