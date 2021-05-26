@@ -1,5 +1,8 @@
 # concurrently-await
 
+[![GitHub release](https://img.shields.io/github/release/bameyrick/concurrently-await.svg)](https://github.com/bameyrick/concurrently-await/releases)
+[![Build Status](https://travis-ci.com/bameyrick/concurrently-await.svg?branch=master)](https://travis-ci.com/bameyrick/concurrently-await)
+
 Run multiple commands concurrently with the option to supply a condition to pass before running the next command.
 
 **Table of contents**
