@@ -69,7 +69,7 @@ Conditions are optional, but must be seperated from the command and its argument
 You can provide a list of custom names to be used in prefix template for logging, otherwise the prefix will just be the index of the command.
 
 ```
-concurrently-await --names ui,server "command1 arg > --[condition] value" "command2 arg > --[condition] value"
+concurrently-await --names ui,server "command1 arg > --<condition> value" "command2 arg > --<condition> value"
 ```
 
 ### name-seperator
@@ -77,7 +77,7 @@ concurrently-await --names ui,server "command1 arg > --[condition] value" "comma
 The character to split [names](#names) on, the default is `,`. Example usage:
 
 ```
-concurrently-await --names ui|server --name-seperator | "command1 arg > --[condition] value" "command2 arg > --[condition] value"
+concurrently-await --names ui|server --name-seperator | "command1 arg > --<condition> value" "command2 arg > --<condition> value"
 ```
 
 ### wait-seperator
@@ -85,5 +85,5 @@ concurrently-await --names ui|server --name-seperator | "command1 arg > --[condi
 The default wait seperator is `>` but this may conflict with your command. You can set your own wait seperator by setting the wait seperator option:
 
 ```
-concurrently-await --wait-seperator ~> "command1 arg ~> --[condition] value" "command2 arg ~> --[condition] value"
+concurrently-await --wait-seperator ~> "command1 arg ~> --<condition> value" "command2 arg ~> --<condition> value"
 ```
