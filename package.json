@@ -1,0 +1,47 @@
+{
+  "name": "concurrently-await",
+  "version": "1.0.0",
+  "description": "Run commands concurrently with option to wait for a condition to match before moving to next command",
+  "bin": {
+    "concurrently-await": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "lint": "tslint --project tsconfig.json",
+    "clean": "rimraf dist"
+  },
+  "author": "Ben Meyrick <bameyrick@gmail.com>",
+  "license": "MIT",
+  "lint-staged": {
+    "*.ts": [
+      "prettier --print-width 140 --single-quote --arrow-parens avoid --trailing-comma es5 --parser typescript --write",
+      "npm run lint"
+    ],
+    "*.json": [
+      "prettier --print-width 140 --single-quote --trailing-comma es5 --parser json --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "@types/yargs": "^17.0.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "yargs": "^17.0.1"
+  }
+}
