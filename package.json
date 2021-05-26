@@ -2,11 +2,25 @@
   "name": "concurrently-await",
   "version": "1.0.0",
   "description": "Run commands concurrently with option to wait for a condition to match before moving to next command",
-  "bin": {
-    "concurrently-await": "./dist/index.js"
-  },
+  "keywords": [
+    "concurrent",
+    "await",
+    "wait",
+    "log",
+    "scripts",
+    "command",
+    "sh",
+    "bash",
+    "parallel",
+    "concurrently"
+  ],
+  "author": "Ben Meyrick <bameyrick@gmail.com>",
+  "license": "MIT",
   "engines": {
     "node": ">=10.0.0"
+  },
+  "bin": {
+    "concurrently-await": "./dist/index.js"
   },
   "scripts": {
     "build": "npm run clean && tsc -p tsconfig.json",
@@ -14,8 +28,6 @@
     "clean": "rimraf dist",
     "upgrade-interactive": "npm-check --update"
   },
-  "author": "Ben Meyrick <bameyrick@gmail.com>",
-  "license": "MIT",
   "lint-staged": {
     "*.ts": [
       "prettier --print-width 140 --single-quote --arrow-parens avoid --trailing-comma es5 --parser typescript --write",
@@ -29,6 +41,10 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bameyrick/concurrently-await.git"
   },
   "devDependencies": {
     "@types/node": "^15.6.1",
