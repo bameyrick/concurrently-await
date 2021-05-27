@@ -18,6 +18,8 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
 
   const name = getName(command, index);
 
+  let conditionMet: boolean = false;
+
   if (command.condition) {
     if (!command.value || command.value === '') {
       logError(`ERROR: Wait condition provided for command "${command.command}" but no value was provided`);
@@ -43,7 +45,9 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
         }
         case WaitCondition.Includes: {
           runCommand(command.command, index, name, message => {
-            if (message.toLowerCase().includes(command.value!.toLowerCase())) {
+            if (!conditionMet && message.toLowerCase().includes(command.value!.toLowerCase())) {
+              conditionMet = true;
+
               concurrently(commands, nextIndex);
             }
           });
@@ -59,7 +63,9 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
         }
         case WaitCondition.Matches: {
           runCommand(command.command, index, name, message => {
-            if (message === command.value) {
+            if (!conditionMet && message === command.value) {
+              conditionMet = true;
+
               concurrently(commands, nextIndex);
             }
           });
@@ -82,7 +88,13 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
                 clearTimeout(timeout);
               }
 
-              timeout = setTimeout(() => concurrently(commands, nextIndex), delay);
+              if (!conditionMet) {
+                timeout = setTimeout(() => {
+                  conditionMet = true;
+
+                  concurrently(commands, nextIndex);
+                }, delay);
+              }
             });
 
             if (nextCommand) {

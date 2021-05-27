@@ -1,9 +1,17 @@
+import * as chalk from 'chalk';
 import { ChildProcess } from 'child_process';
 
 /**
  * Possible exit events
  */
-const exitEvents = ['beforeExit', 'exiting', 'SIGINT', 'SIGUSR1', 'SIGUSR2'];
+enum ExitEvents {
+  BeforeExit = 'beforeExit',
+  Exiting = 'exiting',
+  SIGINT = 'SIGINT',
+  SIGUSR1 = 'SIGUSR1',
+  SIGUSR2 = 'SIGUSR2',
+  UncaughtException = 'uncaughtException',
+}
 
 /**
  * Whether we have exitted yet
@@ -25,12 +33,22 @@ export function addChildProcess(childProcess: ChildProcess): void {
 /**
  * Handles the exit events and kills the child processes
  */
-exitEvents.forEach(event =>
-  process.on(event, () => {
+Object.values(ExitEvents).forEach(event =>
+  process.on(event, data => {
     if (!exitted) {
       exitted = true;
 
-      childProcesses.forEach(process => process.kill());
+      childProcesses.forEach(process => {
+        process.kill();
+      });
+
+      if (event === ExitEvents.UncaughtException) {
+        console.log(chalk.red('Uncaught exception:'));
+
+        console.log(data);
+
+        process.exit(1);
+      }
     }
   })
 );
