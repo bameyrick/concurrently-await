@@ -1,5 +1,6 @@
 import * as chalk from 'chalk';
 import { exec } from 'child_process';
+import { addChildProcess } from './exit-handler';
 import { logger } from './logger';
 
 /**
@@ -8,7 +9,11 @@ import { logger } from './logger';
 export function runCommand(command: string, index: number, name: string, callback?: (data: string) => void): void {
   console.log(chalk.green(`Running ${name}: "${command}"`));
 
-  exec(command).stdout?.on('data', data => {
+  const process = exec(command);
+
+  addChildProcess(process);
+
+  process.stdout?.on('data', data => {
     data = data.trim();
 
     if (data) {
