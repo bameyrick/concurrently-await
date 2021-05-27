@@ -5,6 +5,8 @@ node_js:
 cache: yarn
 jobs:
   include:
+    - stage: dry-run
+      script: npm run build && npm publish --dry-run
     - stage: npm-bundle
       script: yarn build && npm version $TRAVIS_BRANCH --allow-same-version --allow-empty
       deploy:
@@ -16,5 +18,7 @@ jobs:
         on:
           tags: true
 stages:
+  - name: dry-run
+    if: tag IS NOT present
   - name: npm-bundle
     if: tag IS present
