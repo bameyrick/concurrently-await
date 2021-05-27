@@ -34,13 +34,13 @@ yarn -D concurrently-await
 Remember to surround separate commands with quotes:
 
 ```
-concurrently-await "command1 arg > --<condition> value" "command2 arg > --<condition> value"
+concurrently-await "command1 arg await --<condition> value" "command2 arg await --<condition> value"
 ```
 
 In package.json, escape quotes:
 
 ```json
-"start" : "concurrently-await \"command1 arg > --<condition> value\" \"command2 arg > --<condition> value\""
+"start" : "concurrently-await \"command1 arg await --<condition> value\" \"command2 arg await --<condition> value\""
 ```
 
 ### Conditions
@@ -69,7 +69,7 @@ Conditions are optional, but must be seperated from the command and its argument
 You can provide a list of custom names to be used in prefix template for logging, otherwise the prefix will just be the index of the command.
 
 ```
-concurrently-await --names ui,server "command1 arg > --<condition> value" "command2 arg > --<condition> value"
+concurrently-await --names ui,server "command1 arg await --<condition> value" "command2 arg await --<condition> value"
 ```
 
 ### name-seperator
@@ -77,12 +77,12 @@ concurrently-await --names ui,server "command1 arg > --<condition> value" "comma
 The character to split [names](#names) on, the default is `,`. Example usage:
 
 ```
-concurrently-await --names ui|server --name-seperator | "command1 arg > --<condition> value" "command2 arg > --<condition> value"
+concurrently-await --names ui|server --name-seperator | "command1 arg await --<condition> value" "command2 arg await --<condition> value"
 ```
 
 ### wait-seperator
 
-The default wait seperator is `>` but this may conflict with your command. You can set your own wait seperator by setting the wait seperator option:
+The default wait seperator is `await` but this may conflict with your command. You can set your own wait seperator by setting the wait seperator option:
 
 ```
 concurrently-await --wait-seperator ~> "command1 arg ~> --<condition> value" "command2 arg ~> --<condition> value"

@@ -19,7 +19,7 @@ const args = yargs
       describe:
         "The character(s) to split a command and it's wait condition on on. Example usage:\n" +
         'concurrently-await "/npm run build-client --watch | 500/" "/npm run server"  --wait-separator "|"',
-      default: '>',
+      default: 'await',
     },
     n: {
       alias: 'names',
