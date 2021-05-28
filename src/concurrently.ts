@@ -36,7 +36,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
             runCommand(command.command, index, name);
 
             if (nextCommand) {
-              console.log(chalk.blue(`Waiting for ${delay}ms before running ${getName(nextCommand, nextIndex)}`));
+              console.log(chalk.blueBright(`Waiting for ${delay}ms before running ${getName(nextCommand, nextIndex)}`));
 
               setTimeout(() => concurrently(commands, nextIndex), delay);
             }
@@ -54,7 +54,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
 
           if (nextCommand) {
             console.log(
-              chalk.blue(
+              chalk.blueBright(
                 `Waiting for ${name} to log a message including "${command.value}" before running ${getName(nextCommand, nextIndex)}`
               )
             );
@@ -71,7 +71,9 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
           });
 
           if (nextCommand) {
-            console.log(chalk.blue(`Waiting for [${name}] to log "${command.value}" before running ${getName(nextCommand, nextIndex)}`));
+            console.log(
+              chalk.blueBright(`Waiting for [${name}] to log "${command.value}" before running ${getName(nextCommand, nextIndex)}`)
+            );
           }
           break;
         }
@@ -99,7 +101,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
 
             if (nextCommand) {
               console.log(
-                chalk.blue(`Waiting for ${name} to stop logging for ${delay}ms before running ${getName(nextCommand, nextIndex)}`)
+                chalk.blueBright(`Waiting for ${name} to stop logging for ${delay}ms before running ${getName(nextCommand, nextIndex)}`)
               );
             }
           }

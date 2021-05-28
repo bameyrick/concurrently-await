@@ -9,19 +9,25 @@ import { logger } from './logger';
 export function runCommand(command: string, index: number, name: string, callback?: (data: string) => void): void {
   console.log(chalk.green(`Running ${name}: "${command}"`));
 
-  const process = exec(command);
+  const childProcess = exec(command);
 
-  addChildProcess(process);
+  addChildProcess(childProcess);
 
-  process.stdout?.on('data', data => {
-    data = data.trim();
+  childProcess.stdout?.on('data', data => handleLog(data, index, name, callback));
+  childProcess.stderr?.on('data', data => handleLog(data, index, name, callback));
+}
 
-    if (data) {
-      logger(index, data, name);
-    }
+/**
+ * Handles a log event
+ */
+function handleLog(data: string, index: number, name: string, callback?: (data: string) => void): void {
+  data = data.trim();
 
-    if (callback) {
-      callback(data);
-    }
-  });
+  if (data) {
+    logger(index, data, name);
+  }
+
+  if (callback) {
+    callback(data);
+  }
 }
