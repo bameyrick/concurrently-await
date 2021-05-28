@@ -2,18 +2,7 @@
   "name": "concurrently-await",
   "version": "1.0.0",
   "description": "Run commands concurrently with option to wait for a condition to match before moving to next command",
-  "keywords": [
-    "concurrent",
-    "await",
-    "wait",
-    "log",
-    "scripts",
-    "command",
-    "sh",
-    "bash",
-    "parallel",
-    "concurrently"
-  ],
+  "keywords": ["concurrent", "await", "wait", "log", "scripts", "command", "sh", "bash", "parallel", "concurrently"],
   "author": "Ben Meyrick <bameyrick@gmail.com>",
   "license": "MIT",
   "engines": {
@@ -33,9 +22,7 @@
       "prettier --print-width 140 --single-quote --arrow-parens avoid --trailing-comma es5 --parser typescript --write",
       "npm run lint"
     ],
-    "*.json": [
-      "prettier --print-width 140 --single-quote --trailing-comma es5 --parser json --write"
-    ]
+    "*.json": ["prettier --print-width 140 --single-quote --trailing-comma es5 --parser json --write"]
   },
   "husky": {
     "hooks": {
@@ -49,7 +36,7 @@
   "devDependencies": {
     "@types/node": "^15.6.1",
     "@types/yargs": "^17.0.0",
-    "husky": "^6.0.0",
+    "husky": "^4.3.8",
     "lint-staged": "^11.0.0",
     "npm-check": "^5.9.2",
     "prettier": "^2.3.0",
