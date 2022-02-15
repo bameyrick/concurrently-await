@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { ConcurrentCommand } from './command';
 import { getName } from './get-name';
 import { logError } from './log-error';

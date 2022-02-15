@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { exec } from 'child_process';
 import { addChildProcess } from './exit-handler';
 import { logger } from './logger';
