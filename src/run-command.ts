@@ -1,3 +1,4 @@
+import { isString } from '@qntm-code/utils';
 import chalk from 'chalk';
 import { exec } from 'child_process';
 import { addChildProcess } from './exit-handler';
@@ -20,14 +21,17 @@ export function runCommand(command: string, index: number, name: string, callbac
 /**
  * Handles a log event
  */
-function handleLog(data: string, index: number, name: string, callback?: (data: string) => void): void {
-  data = data.trim();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleLog(data: any, index: number, name: string, callback?: (data: string) => void): void {
+  if (isString(data)) {
+    data = data.trim();
 
-  if (data) {
-    logger(index, data, name);
-  }
+    if (data) {
+      logger(index, data as string, name);
+    }
 
-  if (callback) {
-    callback(data);
+    if (callback) {
+      callback(data as string);
+    }
   }
 }
