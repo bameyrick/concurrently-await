@@ -1,4 +1,5 @@
-import * as chalk from 'chalk';
+import { isEmpty, isNullOrUndefined } from '@qntm-code/utils';
+import chalk from 'chalk';
 import { ConcurrentCommand } from './command';
 import { getName } from './get-name';
 import { logError } from './log-error';
@@ -21,7 +22,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
   let conditionMet: boolean = false;
 
   if (command.condition) {
-    if (!command.value || command.value === '') {
+    if (isEmpty(command.value)) {
       logError(`ERROR: Wait condition provided for command "${command.command}" but no value was provided`);
 
       process.exit();
@@ -45,7 +46,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
         }
         case WaitCondition.Includes: {
           runCommand(command.command, index, name, message => {
-            if (!conditionMet && message.toLowerCase().includes(command.value!.toLowerCase())) {
+            if (!conditionMet && !isNullOrUndefined(command.value) && message.toLowerCase().includes(command.value.toLowerCase())) {
               conditionMet = true;
 
               concurrently(commands, nextIndex);
@@ -81,7 +82,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
           if (isNaN(command.value as unknown as number)) {
             logError(`ERROR: Quiet delay for command "${command.command}" is not a number`);
           } else {
-            const delay = parseFloat(command.value!);
+            const delay = parseFloat(command.value);
 
             let timeout: NodeJS.Timer;
 

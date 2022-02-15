@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { ChildProcess } from 'child_process';
 
 /**
@@ -48,6 +48,8 @@ Object.values(ExitEvents).forEach(event =>
         console.log(data);
 
         process.exit(1);
+      } else {
+        process.exit(0);
       }
     }
   })
