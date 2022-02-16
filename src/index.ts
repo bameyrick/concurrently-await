@@ -1,16 +1,15 @@
-#!/usr/bin/env node
-
-import * as yargs from 'yargs';
+#!/usr/bin/env node --experimental-specifier-resolution=node
+import yargs, { Argv } from 'yargs';
 import { ConcurrentCommand } from './command';
 import { concurrently } from './concurrently';
 import { WaitCondition } from './wait-condition';
+import { version } from '../package.json';
 
-const args = yargs
+const args = (yargs() as unknown as Argv)
   .usage('$0 [options] <command ...>')
   .help('h')
   .alias('h', 'help')
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-var-requires
-  .version('v', require('../package.json').version as string)
+  .version('v', version)
   .alias('v', 'V')
   .alias('v', 'version')
   .options({

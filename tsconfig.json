@@ -1,17 +1,20 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "outDir": "./dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ES2020",
+    "target": "ES2021",
     "sourceMap": false,
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "target": "es2021",
-    "module": "CommonJS",
-    "lib": ["esnext", "DOM"]
+    "lib": ["ESNEXT", "DOM"]
   },
+  "exclude": ["node_modules", "dist/"],
   "include": ["src/**/*"]
 }

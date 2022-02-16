@@ -8,6 +8,7 @@
   "engines": {
     "node": ">=14.0.0"
   },
+  "type": "module",
   "bin": {
     "concurrently-await": "./dist/index.js"
   },
