@@ -9,8 +9,8 @@ const args = yargs
   .usage('$0 [options] <command ...>')
   .help('h')
   .alias('h', 'help')
-  // tslint:disable-next-line:no-require-imports
-  .version('v', require('../package.json').version)
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  .version('v', (require('../package.json') as Record<string, unknown>).version as string)
   .alias('v', 'V')
   .alias('v', 'version')
   .options({

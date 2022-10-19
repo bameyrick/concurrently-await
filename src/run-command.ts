@@ -13,8 +13,8 @@ export function runCommand(command: string, index: number, name: string, callbac
 
   addChildProcess(childProcess);
 
-  childProcess.stdout?.on('data', data => handleLog(data, index, name, callback));
-  childProcess.stderr?.on('data', data => handleLog(data, index, name, callback));
+  childProcess.stdout?.on('data', data => handleLog(data as string, index, name, callback));
+  childProcess.stderr?.on('data', data => handleLog(data as string, index, name, callback));
 }
 
 /**

@@ -8,7 +8,7 @@ import { WaitCondition } from './wait-condition';
 /**
  * Concurrently run commands with optional conditions before moving onto the next command
  */
-export function concurrently(commands: ConcurrentCommand[], index: number = 0): void {
+export function concurrently(commands: ConcurrentCommand[], index = 0): void {
   const command = commands[0];
 
   commands.shift();
@@ -18,7 +18,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
 
   const name = getName(command, index);
 
-  let conditionMet: boolean = false;
+  let conditionMet = false;
 
   if (command.condition) {
     if (!command.value || command.value === '') {
@@ -81,7 +81,7 @@ export function concurrently(commands: ConcurrentCommand[], index: number = 0): 
           if (isNaN(command.value as unknown as number)) {
             logError(`ERROR: Quiet delay for command "${command.command}" is not a number`);
           } else {
-            const delay = parseFloat(command.value!);
+            const delay = parseFloat(command.value);
 
             let timeout: NodeJS.Timer;
 
