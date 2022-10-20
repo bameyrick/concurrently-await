@@ -36,26 +36,34 @@ const args = yargs
 
 if (!(args instanceof Promise)) {
   const names = args.n?.split(args.ns) || [];
+  const commands = args._ as string[];
+  const longestName = Math.max(
+    names.reduce((longest, name) => (name.length > longest ? name.length : longest), 0),
+    commands.length
+  );
   const waitSeperator = args.ws;
 
   const conditionRegex = new RegExp(`--(${Object.values(WaitCondition).join('|')})`);
 
-  const commands: ConcurrentCommand[] = (args._ as string[]).map((arg, index) => {
-    const argParts = arg.split(waitSeperator);
+  concurrently(
+    commands.map((arg, index) => {
+      const argParts = arg.split(waitSeperator);
 
-    const conditionMatches = argParts[1]?.match(conditionRegex);
+      const conditionMatches = argParts[1]?.match(conditionRegex);
 
-    const condition = conditionMatches ? (conditionMatches[0].replace('--', '').trim() as WaitCondition) : undefined;
+      const condition = conditionMatches ? (conditionMatches[0].replace('--', '').trim() as WaitCondition) : undefined;
 
-    const value = condition ? argParts[1].split(`--${condition}`)[1].trim() : undefined;
+      const value = condition ? argParts[1].split(`--${condition}`)[1].trim() : undefined;
 
-    return {
-      command: argParts[0].trim(),
-      condition,
-      value,
-      name: names[index],
-    };
-  });
+      const command: ConcurrentCommand = {
+        command: argParts[0].trim(),
+        condition,
+        value,
+        name: names[index],
+        longestName,
+      };
 
-  concurrently(commands);
+      return command;
+    })
+  );
 }

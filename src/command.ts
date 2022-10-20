@@ -20,4 +20,9 @@ export interface ConcurrentCommand {
    * An optional display name for the command
    */
   name?: string;
+
+  /**
+   * The longest name
+   */
+  longestName: number;
 }

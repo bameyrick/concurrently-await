@@ -1,17 +1,25 @@
 import * as chalk from 'chalk';
 
 let lastLogIndex: number;
+let lastMessage: string;
+let didClearLine = false;
 
 /**
  * Handles logging output from a command
  */
-export function logger(index: number, message: string, name: string): void {
+export function logger(index: number, message: string, name: string, longestName: number): void {
+  // Replace some ANSI code that would impact clearing lines
+  message = message.replace(/\u2026/g, '...');
+
+  message.split('\n').map(line => log(index, line, name, longestName));
+}
+
+function log(index: number, message: string, name: string, longestName: number): void {
   name = `${name}:`;
 
-  const spaces = new Array(name.length).fill(' ').join('');
-  const prefix = lastLogIndex === index ? spaces : chalk.bold(name);
-
-  message = message.replace(/^\n/, '');
+  const numberOfSpaces = longestName + 3;
+  const spaces = chalk.bold(new Array(numberOfSpaces).fill(' ').join(''));
+  const prefix = lastLogIndex === index ? spaces : chalk.bold(`${name}`.padEnd(numberOfSpaces, ' '));
 
   if (/^(npm warn |warn |warning )/.test(message.toLowerCase())) {
     message = chalk.yellow(message);
@@ -27,7 +35,27 @@ export function logger(index: number, message: string, name: string): void {
     message = message.replace(url, chalk.cyanBright(url));
   });
 
-  console.log(`${prefix} ${message.replace(/\n/g, `\n${spaces} `)}`);
+  if (message.replace(/\s/g, '').replace(/\n/g, '').length) {
+    const clearLine = shouldClearLine(index, message);
 
-  lastLogIndex = index;
+    if (!didClearLine && clearLine) {
+      process.stdout.write('\n');
+    }
+
+    process.stdout.write(`${clearLine ? `\r\x1b[K` : '\n'}${prefix} ${message.replace(/\n/g, `\n${spaces}`).replace(/\r/g, '')}`);
+
+    didClearLine = clearLine;
+    lastMessage = message;
+    lastLogIndex = index;
+  }
+}
+
+function shouldClearLine(index: number, message: string): boolean {
+  if (lastLogIndex !== index) {
+    return false;
+  }
+
+  const matches = ['[webpack.Progress]'];
+
+  return matches.some(match => message.includes(match) && lastMessage?.includes(match));
 }
