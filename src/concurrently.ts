@@ -33,7 +33,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
           } else {
             const delay = parseFloat(command.value);
 
-            runCommand(command.command, index, name);
+            runCommand(command.command, index, name, command.longestName);
 
             if (nextCommand) {
               console.log(chalk.blueBright(`Waiting for ${delay}ms before running ${getName(nextCommand, nextIndex)}`));
@@ -44,7 +44,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
           break;
         }
         case WaitCondition.Includes: {
-          runCommand(command.command, index, name, message => {
+          runCommand(command.command, index, name, command.longestName, message => {
             if (!conditionMet && message.toLowerCase().includes(command.value!.toLowerCase())) {
               conditionMet = true;
 
@@ -62,7 +62,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
           break;
         }
         case WaitCondition.Matches: {
-          runCommand(command.command, index, name, message => {
+          runCommand(command.command, index, name, command.longestName, message => {
             if (!conditionMet && message === command.value) {
               conditionMet = true;
 
@@ -85,7 +85,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
 
             let timeout: NodeJS.Timer;
 
-            runCommand(command.command, index, name, message => {
+            runCommand(command.command, index, name, command.longestName, message => {
               if (timeout && message) {
                 clearTimeout(timeout);
               }
@@ -110,7 +110,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
       }
     }
   } else {
-    runCommand(command.command, index, name);
+    runCommand(command.command, index, name, command.longestName);
 
     if (nextCommand) {
       concurrently(commands, nextIndex);
