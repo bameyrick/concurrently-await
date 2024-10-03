@@ -64,7 +64,13 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
         }
         case WaitCondition.Matches: {
           runCommand(command.command, index, name, command.longestName, message => {
-            if (!conditionMet && stripAnsi(message).trim() === command.value?.trim()) {
+            if (
+              !conditionMet &&
+              message
+                .split('\n')
+                .map(item => stripAnsi(item).trim())
+                .includes(command.value!.trim())
+            ) {
               conditionMet = true;
 
               concurrently(commands, nextIndex);
