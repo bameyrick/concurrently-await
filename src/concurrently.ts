@@ -1,4 +1,5 @@
 import * as chalk from 'chalk';
+import stripAnsi from 'strip-ansi';
 import { ConcurrentCommand } from './command';
 import { getName } from './get-name';
 import { logError } from './log-error';
@@ -45,7 +46,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
         }
         case WaitCondition.Includes: {
           runCommand(command.command, index, name, command.longestName, message => {
-            if (!conditionMet && message.toLowerCase().includes(command.value!.toLowerCase())) {
+            if (!conditionMet && stripAnsi(message).toLowerCase().includes(command.value!.toLowerCase())) {
               conditionMet = true;
 
               concurrently(commands, nextIndex);
@@ -63,7 +64,7 @@ export function concurrently(commands: ConcurrentCommand[], index = 0): void {
         }
         case WaitCondition.Matches: {
           runCommand(command.command, index, name, command.longestName, message => {
-            if (!conditionMet && message === command.value) {
+            if (!conditionMet && stripAnsi(message) === command.value) {
               conditionMet = true;
 
               concurrently(commands, nextIndex);
