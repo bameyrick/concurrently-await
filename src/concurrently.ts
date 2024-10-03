@@ -1,9 +1,9 @@
 import * as chalk from 'chalk';
-import stripAnsi from 'strip-ansi';
 import { ConcurrentCommand } from './command';
 import { getName } from './get-name';
 import { logError } from './log-error';
 import { runCommand } from './run-command';
+import { stripAnsi } from './strip-ansi';
 import { WaitCondition } from './wait-condition';
 
 /**
