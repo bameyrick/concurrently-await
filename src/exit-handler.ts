@@ -38,6 +38,9 @@ Object.values(ExitEvents).forEach(event =>
     if (!exitted) {
       exitted = true;
 
+      // Ensure last log of passed command is emitted
+      console.log('');
+
       childProcesses.forEach(process => {
         process.kill();
       });
